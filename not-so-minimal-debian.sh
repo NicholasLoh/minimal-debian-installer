@@ -344,12 +344,6 @@ install_xorg() {
   fonts="fonts-dejavu fonts-firacode fonts-liberation2 fonts-jetbrains-mono fonts-noto-cjk fonts-font-awesome"
   apt-get -y install $xorg $fonts
 
-  banner "Install DeJavuSansMono Nerd Font"
-  wget 'https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/DejaVuSansMono.zip'
-  unzip DejaVuSansMono.zip -d DejaVuSansMono 
-  cp -r DejaVuSansMono ~/.local/share/fonts/
-  rm -rf DejaVuSansMono
-  rm DejaVuSansMono.zip
 }
 
 install_i3() {
@@ -405,6 +399,17 @@ install_bluetooth() {
   }
 
 install_dotfiles() {
+
+  su ${User}
+  banner "Install DeJavuSansMono Nerd Font"
+  wget 'https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/DejaVuSansMono.zip'
+  unzip DejaVuSansMono.zip -d DejaVuSansMono 
+  mkdir -p ~/.local/share/fonts
+  cp -r DejaVuSansMono ~/.local/share/fonts/
+  rm -rf DejaVuSansMono
+  rm DejaVuSansMono.zip
+
+  banner "Installing dotfiles"
   git clone https://github.com/NicholasLoh/.dotfiles.git
   cd .dotfiles
   chmod +x install.sh
