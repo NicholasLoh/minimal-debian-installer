@@ -17,6 +17,8 @@ set -euo pipefail # run `bash -x not-so-minimal-debian.sh` for debugging
 Version="11"
 Release="bullseye" 
 
+USER_HOME="/home/$USER"
+
 hello_world() {
 clear
 banner "START"
@@ -347,6 +349,9 @@ install_xorg() {
 }
 
 install_i3() {
+  banner "Install LightDM"
+  apt-get -y install lightdm
+
   banner "Install i3 window manager "
   local pkgs
   pkgs="dh-autoreconf libxcb-keysyms1-dev libpango1.0-dev libxcb-util0-dev xcb libxcb1-dev libxcb-icccm4-dev libyajl-dev libev-dev libxcb-xkb-dev libxcb-cursor-dev libxkbcommon-dev libxcb-xinerama0-dev libxkbcommon-x11-dev libstartup-notification0-dev libxcb-randr0-dev libxcb-xrm0 libxcb-xrm-dev libxcb-shape0 libxcb-shape0-dev"
@@ -359,6 +364,7 @@ install_i3() {
     meson --prefix /usr/local
     ninja
     ninja install
+    cd ~
 }
 
 install_desktop_env_pkgs() {
@@ -395,12 +401,15 @@ install_bluetooth() {
   git clone https://github.com/linuxmint/blueberry.git
   cd blueberry && mint-build
   cd .. && sudo dpkg -i blueberry\*.deb
-
+  
+  rm -rf blueberry
   }
 
 install_dotfiles() {
 
   su ${User}
+
+  cd /home/${User}
   banner "Install DeJavuSansMono Nerd Font"
   wget 'https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/DejaVuSansMono.zip'
   unzip DejaVuSansMono.zip -d DejaVuSansMono 
