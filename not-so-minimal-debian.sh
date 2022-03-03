@@ -287,14 +287,14 @@ fi
 install_console_pkgs() {
 banner "Install console packages"
 local pkg_tools
-pkg_tools="apt-file apt-show-versions apt-utils aptitude command-not-found"
+pkg_tools="apt-file apt-show-versions apt-utils aptitude command-not-found "
 local build_tools
-build_tools="build-essential meson ninja-build autoconf automake checkinstall libtool"
+build_tools="build-essential meson ninja-build autoconf automake checkinstall libtool "
 local console
-console="zsh cryptsetup curl firmware-misc-nonfree git gnupg stow"
+console="zsh cryptsetup curl firmware-misc-nonfree git gnupg stow "
 console+="keychain libncurses-dev neofetch "
-console+="net-tools nmap openssh-server rsync wireshark"
-console+="unzip wget whois zram-tools"
+console+="net-tools nmap openssh-server rsync wireshark "
+console+="unzip wget whois zram-tools "
 apt-get -y install $pkg_tools $build_tools $console
 apt-file update && update-command-not-found
  
@@ -339,9 +339,9 @@ _EOL_
 install_xorg() {
   banner "Install Xorg"
   local xorg
-  xorg="xorg xbacklight xbindkeys xvkbd xinput xserver-xorg-input-all"
+  xorg="xorg xbacklight xbindkeys xvkbd xinput xserver-xorg-input-all "
   local fonts
-  fonts="fonts-dejavu fonts-firacode fonts-liberation2 fonts-jetbrains-mono fonts-noto-cjk fonts-font-awesome"
+  fonts="fonts-dejavu fonts-firacode fonts-liberation2 fonts-jetbrains-mono fonts-noto-cjk fonts-font-awesome "
   apt-get -y install $xorg $fonts
 
 }
@@ -363,9 +363,9 @@ install_i3() {
 
 install_desktop_env_pkgs() {
     local pkgs
-    pkgs+="dunst dbus-x11 feh nitrogen xdotool xclip"
-    pkgs+="pavucontrol-qt network-manager gir1.2-nm-1.0"
-    pkgs+="pulseaudio pulseaudio-utils rofi polybar starship ranger"
+    pkgs+="dunst dbus-x11 feh nitrogen xdotool xclip "
+    pkgs+="pavucontrol-qt network-manager gir1.2-nm-1.0 "
+    pkgs+="pulseaudio pulseaudio-utils rofi polybar starship ranger "
     apt-get -y install $pkgs
   }
 
@@ -375,15 +375,15 @@ install_desktop_pkgs() {
   local pkgs
   pkgs="build-essential firefox-esr "
   pkgs+="ffmpeg gimp gimp-help-en gimp-data-extras audacity jmtpfs "
-  pkgs+="lm-sensors htop"
-  pkgs+="vlc kitty yad thunar"
+  pkgs+="lm-sensors htop "
+  pkgs+="vlc kitty yad thunar "
   apt-get -y install $pkgs
  }
 
 install_devtools() {
   banner "Install dev tools"    
   local pkgs
-  pkgs="default-jre python3 python3-pip nodejs yarn neovim"
+  pkgs="default-jre python3 python3-pip nodejs yarn neovim "
   banner "Install nodejs"    
   curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
   banner "Install yarn"    
