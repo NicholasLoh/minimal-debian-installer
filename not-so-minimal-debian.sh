@@ -47,22 +47,22 @@ run_options() {
 }
 
 invalid_reply() {
-printf "\nInvalid reply.\n\n"
+  printf "\nInvalid reply.\n\n"
 }
 
 run_script() {
 while :
-do
-    read -r -n 1 -p "Run script now? [yN] > "
-    if [[ "$REPLY" == [yY] ]]; then
-        break
-    elif [[ "$REPLY" == [nN] || "$REPLY" == "" ]]; then
-        echo ""
-        exit
-    else
-        invalid_reply
-    fi
-done
+  do
+      read -r -n 1 -p "Run script now? [yN] > "
+      if [[ "$REPLY" == [yY] ]]; then
+          break
+      elif [[ "$REPLY" == [nN] || "$REPLY" == "" ]]; then
+          echo ""
+          exit
+      else
+          invalid_reply
+      fi
+  done
 }
 
 # ANSI escape codes
@@ -73,57 +73,58 @@ PURPLE="\\033[1;35m"
 NC="\\033[0m" # no colour
 
 echo_red() {
-echo -e "${RED}$1${NC}"
+  echo -e "${RED}$1${NC}"
 }
 
 echo_green() {
-echo -e "${GREEN}$1${NC}"
+  echo -e "${GREEN}$1${NC}"
 }
 
 echo_yellow() {
-echo -e "${YELLOW}$1${NC}"
+  echo -e "${YELLOW}$1${NC}"
 }
 
 echo_purple() {
-echo -e "${PURPLE}$1${NC}"
+  echo -e "${PURPLE}$1${NC}"
 }
 
 banner() {
-printf "\n\n========> $1\n\n"
+  printf "\n\n========> $1\n\n"
 }
 
 bak_file() {
-for f in "$@"; do cp "$f" "$f.$(date +%FT%H%M%S).bak"; done
+  for f in "$@"; do cp "$f" "$f.$(date +%FT%H%M%S).bak"; done
 }
 
 verify_root() {
-if (( EUID != 0 )); then
-    printf "\n\nScript must be run with root privileges. Abort.\n"
-    exit 1
-fi
+  if (( EUID != 0 )); then
+      printf "\n\nScript must be run with root privileges. Abort.\n"
+      exit 1
+  fi
 }
 
 verify_version() {
-local version
-version="$(grep VERSION_ID /etc/os-release | egrep -o '[[:digit:]]{2}')"
-if [[ $version == "$Version" ]]; then
-    :
-else
-    echo $version
-    printf "\n\nScript for Debian $Version stable/$Release only. Abort.\n"
-    exit 1
-fi
+  local version
+  version="$(grep VERSION_ID /etc/os-release | egrep -o '[[:digit:]]{2}')"
+  if [[ $version == "$Version" ]]; then
+      :
+  else
+      echo $version
+      printf "\n\nScript for Debian $Version stable/$Release only. Abort.\n"
+      exit 1
+  fi
 }
 
 verify_homedir() {
 # $1 is $USER
-if [[ "$#" -eq 0 ]]; then
-    printf "\n\nNo username provided. Abort.\n"
-    exit 1
-elif [[ ! -d "/home/$1" ]]; then
-    printf "\n\nA home directory for $1 not found. Abort.\n"
-    exit 1
-fi
+  if [[ "$#" -eq 0 ]]; then
+      printf "\n\nNo username provided. Abort.\n"
+      exit 1
+  elif [[ ! -d "/home/$1" ]]; then
+      printf "\n\nA home directory for $1 not found. Abort.\n"
+      exit 1
+  fi
+}
 
 
 config_consolefont() {
@@ -596,4 +597,4 @@ run_script
 verify_version
 go_or_no_go
 au_revoir
-exit
+exit 0
